@@ -1,0 +1,24 @@
+[
+    {
+        "field": "Brand",
+        "options": [
+            {
+                "name": "brand 1",
+                "n_reviews": 0,
+                "n_views": 0,
+                "avg_rating": 0
+            }
+        ]
+    },
+    {
+        "field": "Product",
+        "options": [
+            {
+                "name": "product 1",
+                "n_reviews": 0,
+                "n_views": 0,
+                "avg_rating": 0
+            }
+        ]
+    }
+]
