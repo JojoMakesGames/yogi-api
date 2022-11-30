@@ -49,9 +49,6 @@ class Query:
             products = (await session.scalars(query)).all()
         return products
 
-    @strawberry.field
-    async def
-
 async def get_context(
     session=Depends(get_session),
 ):
