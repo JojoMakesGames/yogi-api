@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "yogi-api"
+version = "0.1.0"
+description = "Assessment to show basic API skills."
+authors = ["John Oatey"]
+readme = "README.md"
+packages = [{include = "yogi_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+strawberry-graphql = {extras = ["debug-server"], version = "^0.142.3"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
