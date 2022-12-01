@@ -1,7 +1,7 @@
 import typing
 import strawberry
 from strawberry.types import Info
-from dataloaders import DataLoaders
+from app.dataloaders import DataLoaders
 
 @strawberry.interface
 class ReviewSearchFilter:

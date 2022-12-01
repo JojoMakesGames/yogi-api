@@ -4,12 +4,12 @@ from fastapi import Depends
 from strawberry.fastapi import GraphQLRouter
 from strawberry.types import Info
 
-from review_types import ReviewSearch, ReviewSearchBrand, ReviewSearchFilters, ReviewSearchProduct
+from app.review_types import ReviewSearch, ReviewSearchBrand, ReviewSearchFilters, ReviewSearchProduct
 
-from database.session import get_session
-from database import models as orm
+from app.database.session import get_session
+from app.database import models as orm
 
-from dataloaders import DataLoaders, DataLoadersExtension
+from app.dataloaders import DataLoaders, DataLoadersExtension
 
 from sqlalchemy import select
 

@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Assessment to show basic API skills."
 authors = ["John Oatey"]
 readme = "README.md"
-packages = [{include = "yogi_api"}]
+packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -13,7 +13,7 @@ sqlalchemy = "^1.4.44"
 asyncpg = "^0.27.0"
 
 [tool.poetry.scripts]
-my-script = "my_package.log_revision:start"
+app = "app.main:start"
 
 
 [build-system]

@@ -2,8 +2,8 @@ from typing import List
 from strawberry.dataloader import DataLoader
 from strawberry.extensions import Extension
 from sqlalchemy import select
-from database import models as orm
-from database.session import get_session
+from app.database import models as orm
+from app.database.session import get_session
 import enum
 
 class DataLoaders(enum.Enum):
