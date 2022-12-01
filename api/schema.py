@@ -1,10 +1,10 @@
-import typing
-
 import strawberry
 
-from fastapi import FastAPI, Depends
+from fastapi import Depends
 from strawberry.fastapi import GraphQLRouter
 from strawberry.types import Info
+
+from review_types import ReviewSearch, ReviewSearchBrand, ReviewSearchFilters, ReviewSearchProduct
 
 from database.session import get_session
 from database import models as orm
@@ -13,41 +13,27 @@ from dataloaders import DataLoaders, DataLoadersExtension
 
 from sqlalchemy import select
 
-@strawberry.type
-class ReviewSearchBrand:
-    name: str
-
-@strawberry.type
-class ReviewSearchProduct:
-    name: str
-    views: typing.Optional[int]
-    brand: ReviewSearchBrand
-
-    @strawberry.field
-    async def brand(self, info: Info) -> ReviewSearchBrand:
-        return await info.context[DataLoaders.brands].load(self.brand)
-
-@strawberry.type
-class ReviewSearchReview:
-    body: str
-    rating: typing.Optional[int]
-    product: ReviewSearchProduct
 
 @strawberry.type
 class Query:
     @strawberry.field
-    async def brands(self, info: Info) -> typing.List[ReviewSearchBrand]:
-        query = select(orm.Brand)
-        async with info.context['session'] as session:
-            brands = await session.execute(query)
-        return brands.scalars().all()
-
-    @strawberry.field
-    async def products(self, info: Info) -> typing.List[ReviewSearchProduct]:
+    async def review_search(self, info: Info) -> ReviewSearch:
         query = select(orm.Product)
         async with info.context['session'] as session:
             products = (await session.scalars(query)).all()
-        return products
+
+        brands = await info.context[DataLoaders.brands].load_many([product.brand for product in products])
+        brand_filters = [ReviewSearchBrand(id=brand.id, name=brand.name) for brand in set(brands)]
+        products = [
+            ReviewSearchProduct(
+                id=product.id,
+                name=product.name,
+                views=product.views if product.views else 0,
+                brand_id=product.brand
+                ) for product in products]
+        filters = ReviewSearchFilters(products=products, brands=brand_filters)
+
+        return ReviewSearch(unique_products=products, filters=filters)
 
 async def get_context(
     session=Depends(get_session),
@@ -56,11 +42,6 @@ async def get_context(
         "session": session,
     }
 
-
-
 schema = strawberry.Schema(query=Query, extensions=[DataLoadersExtension])
 
 graphql_app = GraphQLRouter(schema, context_getter=get_context)
-
-app = FastAPI()
-app.include_router(graphql_app, prefix="/graphql")

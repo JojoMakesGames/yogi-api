@@ -1,6 +1,4 @@
-from fastapi_utils.session import FastAPISessionMaker
-from typing import Iterator
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
 from contextlib import asynccontextmanager

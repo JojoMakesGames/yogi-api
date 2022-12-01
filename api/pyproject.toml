@@ -10,8 +10,10 @@ packages = [{include = "yogi_api"}]
 python = "^3.11"
 strawberry-graphql = {extras = ["debug-server", "fastapi"], version = "^0.142.3"}
 sqlalchemy = "^1.4.44"
-fastapi-utils = "^0.2.1"
 asyncpg = "^0.27.0"
+
+[tool.poetry.scripts]
+my-script = "my_package.log_revision:start"
 
 
 [build-system]
