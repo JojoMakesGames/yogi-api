@@ -32,3 +32,10 @@ Example Query:
     }
   }
 }```
+
+Short list of things I did not do due to time:
+```
+1) Implement pagination. I would definitely add pagination to this so that it could scale.
+2) Handle Exceptions
+3) Create dao files and better separate code for extensibility
+```
